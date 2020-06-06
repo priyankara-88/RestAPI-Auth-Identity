@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="padding-top:20px">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="well">
+            <input type="button" id="btnLoadEmployee" class="btn btn-success" value="Load Employee" />
+        </div>
+        <div class="well hidden" id="divData">
+            <table class="table table-bordered" id="tblData">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Gender</th>
+                        <th>Salary</th>
+                    </tr>
+                </thead>
+                <tbody id="tblBody">
+                </tbody>
+            </table>
+        </div>
+        <div class="modal fade" tabindex="-1" id="errorModal" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">Session Expired</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <h2 class="modal-title">Please close the message to login again</h2>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-success">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="divError" class="alert alert-danger collapse">
+            <a id="linkClose" class="close" href="#">&times;</a>
+            <div id="divErrorText"></div>
+        </div>
+    </div>
+    <script src="Scripts/jquery-3.4.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(
+            () => {
+                let accessToken = sessionStorage.getItem('accessToken');
+                if (accessToken == null) {
+                    window.location.href = "Login.html";
+                }
+
+                $('#errorModal').on('hidden.bs.modal', () => {
+                    window.location.href = "Login.html";
+                });
+
+                $('#btnLoadEmployee').click(
+                    () => {
+                        console.log('Loading');
+                        $.ajax({
+                            url: 'api/employee',
+                            method: 'GET',
+                            headers: {
+                                'Authorization': 'Bearer ' + accessToken
+                            },
+                            success: (data) => {
+                                $('#divData').removeClass('hidden');
+                                $('#tblBody').empty();
+                                $.each(data, (index, value) => {
+                                    let row = $('<tr><td>' + value.ID + '</td><td>'
+                                        + value.FirstName + '</td><td>'
+                                        + value.LastName + '</td><td>'
+                                        + value.Gender + '</td><td>'
+                                        + value.Salary + '</td></tr>');
+                                    $('#tblData').append(row);
+                                });
+                            },
+                            error: (jqXHR) => {
+                                if (jqXHR.status == "401") {
+                                    $('#errorModal').modal('show');
+                                }
+                                else {
+                                    $('#divErrorText').text(jqXHR.responseText);
+                                    $('#divError').show('fade');
+                                }
+                            }
+                        });
+                    });
+
+                $('#linkClose').click(
+                    () => {
+                        $('#divError').hide('fade');
+                    });
+            });
+    </script>
+</body>
+</html>
