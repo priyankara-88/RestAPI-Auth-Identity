@@ -1,3 +1,3 @@
-# Rest API + Identity Server
+# Rest API + ASP.NET Identity
 
 Building ASP.NET Web API app including authentication handling using Identity Server
