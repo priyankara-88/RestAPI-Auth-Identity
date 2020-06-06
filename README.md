@@ -1,2 +1,3 @@
-# RestAPI-Auth-IdentityServer
+# RestAPI + IdentityServer
+
 Building ASP.NET Web API app including authentication handling using Identity Server
