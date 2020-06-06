@@ -9,6 +9,7 @@
     <div class="col-md-10 col-md-offset-1">
         <div class="well">
             <input type="button" id="btnLoadEmployee" class="btn btn-success" value="Load Employee" />
+            <input type="button" id="btnLogOff" class="btn btn-success pull-right" value="Log Off" />
         </div>
         <div class="well hidden" id="divData">
             <table class="table table-bordered" id="tblData">
@@ -98,7 +99,11 @@
                             }
                         });
                     });
-
+                $('#btnLogOff').click(
+                    () => {
+                        sessionStorage.removeItem('accessToken');
+                        window.location.href ='Login.html';
+                    });
                 $('#linkClose').click(
                     () => {
                         $('#divError').hide('fade');

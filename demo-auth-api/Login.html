@@ -61,6 +61,7 @@
                                 grant_type : 'password'
                             },
                             success: (response) => {
+                                // You can use 'localStorage' to keep save access token in browser
                                 sessionStorage.setItem('accessToken', response.access_token);
                                 window.location.href = "Data.html";
                             },
