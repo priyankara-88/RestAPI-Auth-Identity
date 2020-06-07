@@ -9,6 +9,7 @@
     <div class="col-md-10 col-md-offset-1">
         <div class="well">
             <input type="button" id="btnLoadEmployee" class="btn btn-success" value="Load Employee" />
+            <span id="spanUsername" class="text-muted"></span>
             <input type="button" id="btnLogOff" class="btn btn-success pull-right" value="Log Off" />
         </div>
         <div class="well hidden" id="divData">
@@ -62,6 +63,8 @@
                 if (accessToken == null) {
                     window.location.href = "Login.html";
                 }
+
+                $('#spanUsername').text('Hello ' + sessionStorage.getItem('userName'));
 
                 $('#errorModal').on('hidden.bs.modal', () => {
                     window.location.href = "Login.html";

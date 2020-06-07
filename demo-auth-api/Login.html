@@ -63,6 +63,7 @@
                             success: (response) => {
                                 // You can use 'localStorage' to keep save access token in browser
                                 sessionStorage.setItem('accessToken', response.access_token);
+                                sessionStorage.setItem('userName', response.userName);
                                 window.location.href = "Data.html";
                             },
                             error: (jqXHR) => {
