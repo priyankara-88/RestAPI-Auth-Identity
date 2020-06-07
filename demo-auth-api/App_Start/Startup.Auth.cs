@@ -59,11 +59,11 @@ namespace demo_auth_api
             //    appId: "",
             //    appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "xxxxxxx.apps.googleusercontent.com",
+                ClientSecret = "xxxxxxx"
+            });
         }
     }
 }
